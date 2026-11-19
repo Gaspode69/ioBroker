@@ -45,6 +45,12 @@ if (!/^win/.test(platform) && !tools.isAutomatedInstallation()) {
             .then(() => { });
     }
 } else {
+    if (/^win/.test(platform)) {
+        // Work around inherited npm allow-scripts breaking nested installs: https://github.com/npm/cli/issues/9968
+        delete process.env.npm_config_allow_scripts;
+        delete process.env.NPM_CONFIG_ALLOW_SCRIPTS;
+    }
+
     console.log(`Windows installation starting... (fixing = ${pack.name.includes('fix')})`);
 
     // Cancel Windows installation/fix of ioBroker for non x64 systems
