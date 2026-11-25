@@ -48,8 +48,10 @@ Die Sicherheitsabfrage mit `Y` bestätigen. Das Skript führt anschließend auto
 4. vollständigen lokalen Windows-Fix
 5. erneute Aufzeichnung und Vergleich des Zustands nach dem Fix
 
-Das Repository selbst wird dabei nicht verändert. Insbesondere wird `npm run make-fix` nicht im
-Arbeitsverzeichnis ausgeführt.
+Der lokale Quellcode-Checkout bleibt dabei unverändert. Insbesondere wird `npm run make-fix` nicht in
+diesem Arbeitsverzeichnis ausgeführt; das Testpaket entsteht ausschließlich unter `%TEMP%`. Die beim
+Aufruf angegebene ioBroker-Testinstallation wird durch den Fixer dagegen absichtlich verändert: unter
+anderem werden Dienst, Datenbanken, npm-Konfiguration, Paketdateien und `node_modules` bearbeitet.
 
 ## Ergebnisse kontrollieren
 
