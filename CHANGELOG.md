@@ -1,4 +1,8 @@
 # Changelog for Windows-Installer-NPX
+## **WORK IN PROGRESS**
+* Added `iob diag` for Windows with Linux-style system, ioBroker, service, network, log and summary diagnostics
+* Extended Windows diagnostics with event logs, update/reboot status, service failures, ioBroker process and pagefile memory, physical disks, UDP ports, object/state counts and history usage
+
 ## 7.1.0 (2026-10-27)
 * Windows: Added `iob docker`, which shows whether Docker is installed and its engine is running
 

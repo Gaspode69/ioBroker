@@ -121,7 +121,7 @@ iob diag [OPTIONS]
 - `--unmask` - Show otherwise masked output for complete diagnosis
 - `--summary`, `--short`, `-s`, `--zusammenfassung`, `--kurz`, `-k` - Show summary only. These are exact
   aliases of each other; none of them changes the language, combine with `--de` for a German summary.
-- `--help` - Display help and exit. The help text itself is German only, and `-h` is *not* recognised.
+- `--help` - Display help and exit. On Windows, `-h` is supported as an alias.
 - `--allow-root` - Allow running as root user (not recommended)
 
 **Examples:**
@@ -149,6 +149,9 @@ iob diag --help
 ```
 
 Uses the same parameters as `iob diag` above.
+
+On Windows the installed `diagWindows.js` is invoked by `iob diag`. It provides equivalent Windows-native
+checks for the operating system, disks, memory, processes, ioBroker service, listening ports and logs.
 
 ## Maintenance Commands
 

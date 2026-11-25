@@ -22,6 +22,7 @@ jobs:
       - name: prepare-install
         run: |
           npm i --omit=dev
+          npm test
           npm link
           cd ..
           mkdir iobroker-inst

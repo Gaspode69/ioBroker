@@ -47,6 +47,8 @@ const jsControllerMainModule = 'node_modules/iobroker.js-controller/iobroker.js'
 const commandLine = `@echo off
 if [%1]==[fix] (
     npx @iobroker/fix
+) else if [%1]==[diag] (
+    node "%~dp0diagWindows.js" %*
 ) else if [%1]==[docker] (
     node "%~dp0dockerStatus.js" %*
 ) else (
