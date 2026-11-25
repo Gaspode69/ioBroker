@@ -1,9 +1,12 @@
 @echo off
 setlocal
 
-if "%~1"=="" goto usage
-if "%~1"=="/?" goto usage
-if /I "%~1"=="--help" goto usage
+if not "%~1"=="" (
+    echo ERROR: This script does not accept parameters.
+    echo Open the matching ioBroker Command line from the Windows Start menu
+    echo and call this BAT by its full path.
+    exit /b 1
+)
 
 fltmc.exe >nul 2>&1
 if errorlevel 1 (
@@ -12,7 +15,7 @@ if errorlevel 1 (
 )
 
 echo ioBroker Windows fixer integration test
-echo Target: %~f1
+echo Target: %CD%
 echo.
 echo WARNING: This stops ioBroker, changes npm and database files,
 echo          and recreates the Windows service.
@@ -22,13 +25,6 @@ if errorlevel 2 exit /b 2
 
 powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass ^
     -File "%~dp0test-windows-fix.ps1" ^
-    -IoBrokerDir "%~f1" ^
+    -IoBrokerDir "%CD%" ^
     -ConfirmDestructiveTest
 exit /b %errorlevel%
-
-:usage
-echo Usage:
-echo   %~nx0 C:\path\to\the\iobroker-test-installation
-echo.
-echo Run this BAT from an elevated Command Prompt.
-exit /b 1

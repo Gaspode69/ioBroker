@@ -13,7 +13,7 @@ ioBroker-Testinstallation ausgeführt werden, ohne `@iobroker/fix` zu veröffent
 - Windows mit Git, Node.js und npm
 - eine vorhandene ioBroker-Testinstallation
 - Internetzugriff für npm, `jsonltool` und gegebenenfalls `winget`
-- eine als Administrator gestartete Eingabeaufforderung
+- die zur Testinstallation gehörende **ioBroker Command line** aus dem Windows-Startmenü
 
 ## Repository in einem separaten Ordner vorbereiten
 
@@ -45,11 +45,19 @@ git pull --ff-only
 
 ## Test starten
 
-Anschließend im Verzeichnis des lokal geklonten Repositorys ausführen:
+Im Windows-Startmenü die **ioBroker Command line** der zu testenden ioBroker-Instanz öffnen. Bei mehreren
+Installationen am Namen darauf achten, die richtige Verknüpfung auszuwählen. Diese Kommandozeile startet
+mit Administratorrechten und befindet sich bereits im Root-Verzeichnis der zugehörigen ioBroker-Instanz.
+
+Dort das Testskript über seinen vollständigen Pfad und ohne Parameter aufrufen:
 
 ```bat
-tools\test-windows-fix.bat "C:\Pfad\zur\ioBroker-Testinstallation"
+C:\ioBroker-Tests\ioBroker-windows-fixer\tools\test-windows-fix.bat
 ```
+
+Das Skript verwendet das aktuelle Verzeichnis der ioBroker Command line als Testinstallation. Es bricht
+ab, wenn dort `iobroker-data` oder `node_modules\iobroker.js-controller` fehlen. Der Quellcode-Ordner darf
+daher nicht das aktuelle Verzeichnis sein.
 
 Die Sicherheitsabfrage mit `Y` bestätigen. Das Skript führt anschließend automatisch aus:
 
