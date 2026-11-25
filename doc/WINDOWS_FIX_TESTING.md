@@ -24,7 +24,6 @@ anlegen und den Fork dort direkt mit dem Fixer-Branch klonen, zum Beispiel:
 mkdir C:\ioBroker-Tests
 cd /d C:\ioBroker-Tests
 git clone --branch feat/windows-fixer https://github.com/Gaspode69/ioBroker.git ioBroker-windows-fixer
-cd ioBroker-windows-fixer
 ```
 
 Dadurch liegen Quellcode und Testinstallation beispielsweise getrennt unter:
