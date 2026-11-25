@@ -2,11 +2,9 @@
 
 'use strict';
 
-const path = require('node:path');
 const platform = require('node:os').platform();
 const { execSync, exec } = require('node:child_process');
 const fs = require('fs-extra');
-const semver = require('semver');
 const tools = require('./tools.js');
 const pack = require('../package.json');
 
@@ -45,7 +43,9 @@ if (!/^win/.test(platform) && !tools.isAutomatedInstallation()) {
             .then(() => { });
     }
 } else {
-    console.log(`Windows installation starting... (fixing = ${pack.name.includes('fix')})`);
+    const isFix = pack.name.includes('fix');
+
+    console.log(`Windows installation starting... (fixing = ${isFix})`);
 
     // Cancel Windows installation/fix of ioBroker for non x64 systems
     if (process.arch !== 'x64') {
@@ -62,36 +62,25 @@ if (!/^win/.test(platform) && !tools.isAutomatedInstallation()) {
         // nothing to do here, a file did not exist
     }
 
-    // fix command for windows
-    if (pack.name.includes('fix')) {
-        const iobrokerDir = path.join(process.cwd(), 'iobroker-data');
-        const versions = tools.getSystemVersions();
-        if (versions && versions.npm) {
-            if (semver.lt(versions.npm, '7.0.0')) {
-                execSync('npx @iobroker/jsonltool@latest', {
-                    cwd: iobrokerDir,
-                    stdio: 'inherit',
-                });
-            } else {
-                execSync('npm x --yes @iobroker/jsonltool@latest', {
-                    cwd: iobrokerDir,
-                    stdio: 'inherit',
-                });
-            }
-        }
-    }
-
     require('./checkVersions.js');
 
-    require('./installCopyFiles.js');
-
-    // We only do the basic installation when we install, not on fix
-    if (!pack.name.includes('fix')) {
-        const targetDir = process.cwd();
-        execSync('npm install --production', {
-            cwd: targetDir,
-            stdio: 'inherit',
+    if (isFix && /^win/.test(platform)) {
+        const { runWindowsFix } = require('./windowsFix.js');
+        runWindowsFix({
+            repairInstallation: () => require('./installCopyFiles.js'),
+            repairService: () => require('./installSetup.js'),
         });
+    } else {
+        require('./installCopyFiles.js');
+
+        // We only do the basic installation when we install, not on an automated fix run.
+        if (!isFix) {
+            const targetDir = process.cwd();
+            execSync('npm install --production', {
+                cwd: targetDir,
+                stdio: 'inherit',
+            });
+        }
+        require('./installSetup.js');
     }
-    require('./installSetup.js');
 }

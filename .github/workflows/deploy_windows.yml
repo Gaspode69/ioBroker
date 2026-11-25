@@ -22,12 +22,25 @@ jobs:
       - name: prepare-install
         run: |
           npm i --omit=dev
+          npm test
           npm link
           cd ..
           mkdir iobroker-inst
           cd iobroker-inst
 
       - name: install
+        run: |
+          cd ..
+          cd iobroker-inst
+          npx iobroker
+
+      - name: prepare-fix
+        run: |
+          npm unlink
+          npm run make-fix
+          npm link
+
+      - name: fix
         run: |
           cd ..
           cd iobroker-inst

@@ -73,6 +73,7 @@
     "unsafe-perm": true
   },
   "scripts": {
+    "test": "node --test test/*.test.js",
     "deploy": "node tasks",
     "make-fix": "node tasks --fix",
     "release": "release-script",

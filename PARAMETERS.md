@@ -199,6 +199,12 @@ Uses the same parameters as `iob fix` above.
 - Updates boot target settings
 - Fixes timezone configuration
 
+On Windows, `iob fix` follows the same repair phases where they apply: it checks the installation and
+stops the ioBroker service, repairs the project npm settings, removes abandoned npm temporary directories,
+maintains the JSONL databases, refreshes the installation files and package metadata, and recreates and
+starts the Windows service. Linux-specific user, permission, package-manager, boot-target and timezone
+repairs are not performed on Windows.
+
 ## Service Control Commands
 
 ### iob service management

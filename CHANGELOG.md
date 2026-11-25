@@ -1,4 +1,8 @@
 # Changelog for Windows-Installer-NPX
+## **WORK IN PROGRESS**
+* Rebuilt the Windows `iob fix` flow in explicit repair steps aligned with the Linux fixer where applicable
+* Added npm configuration repair, cleanup of abandoned npm temporary directories, installation validation and Windows fixer tests
+
 ## 7.1.0 (2026-10-27)
 * Windows: Added `iob docker`, which shows whether Docker is installed and its engine is running
 

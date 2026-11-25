@@ -73,6 +73,7 @@ A single adapter's memory fingerprint is roundabout 10 to 60 MB.
 
 ### Command Reference
 * [Complete Parameters Reference](PARAMETERS.md) - Comprehensive list of all available parameters for all ioBroker commands (install, fix, diag, node-update)
+* [Lokaler Test des Windows-Fixers](doc/WINDOWS_FIX_TESTING.md) - Vollständiger Testlauf mit Vorher-/Nachher-Protokollierung
 
 ### Community support
 * Get help in the [ioBroker Forums](https://forum.iobroker.net) (English, German and Russian languages)
