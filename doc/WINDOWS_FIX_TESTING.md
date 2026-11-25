@@ -15,18 +15,29 @@ ioBroker-Testinstallation ausgeführt werden, ohne `@iobroker/fix` zu veröffent
 - Internetzugriff für npm, `jsonltool` und gegebenenfalls `winget`
 - eine als Administrator gestartete Eingabeaufforderung
 
-## Repository vorbereiten
+## Repository in einem separaten Ordner vorbereiten
 
-Das Repository einmalig lokal klonen und dabei direkt den Fixer-Branch auswählen:
+Das Repository darf nicht in die ioBroker-Installation geklont werden. Dafür einen eigenen Arbeitsordner
+anlegen und den Fork dort direkt mit dem Fixer-Branch klonen, zum Beispiel:
 
 ```bat
-git clone --branch feat/windows-fixer https://github.com/Gaspode69/ioBroker.git
-cd ioBroker
+mkdir C:\ioBroker-Tests
+cd /d C:\ioBroker-Tests
+git clone --branch feat/windows-fixer https://github.com/Gaspode69/ioBroker.git ioBroker-windows-fixer
+cd ioBroker-windows-fixer
 ```
 
-Ist das Repository bereits lokal vorhanden, stattdessen den Branch aktualisieren:
+Dadurch liegen Quellcode und Testinstallation beispielsweise getrennt unter:
+
+```text
+C:\ioBroker-Tests\ioBroker-windows-fixer   Quellcode und Testskript
+C:\ioBroker                                ioBroker-Testinstallation
+```
+
+Ist der separate Klon bereits vorhanden, stattdessen diesen Ordner öffnen und den Branch aktualisieren:
 
 ```bat
+cd /d C:\ioBroker-Tests\ioBroker-windows-fixer
 git fetch origin
 git switch feat/windows-fixer
 git pull --ff-only
@@ -55,7 +66,14 @@ anderem werden Dienst, Datenbanken, npm-Konfiguration, Paketdateien und `node_mo
 
 ## Ergebnisse kontrollieren
 
-Das Skript zeigt am Anfang sein Ergebnisverzeichnis an. Es liegt unter:
+Das Skript zeigt am Anfang die verwendeten Ablageorte an. Das vollständige Fixer-Laufprotokoll liegt im
+Logverzeichnis der getesteten ioBroker-Installation:
+
+```text
+C:\Pfad\zur\ioBroker-Testinstallation\log\windows-fix-test-<Zeitstempel>.log
+```
+
+Die Vorher-/Nachher-Kopien und der npm-Vergleich liegen getrennt davon unter:
 
 ```text
 %TEMP%\iobroker-windows-fix-<Zeitstempel>
@@ -63,7 +81,6 @@ Das Skript zeigt am Anfang sein Ergebnisverzeichnis an. Es liegt unter:
 
 Wichtige Dateien:
 
-- `windows-fix.log`: vollständige Ausgabe des Fixers
 - `npm-difference.txt`: Unterschiede der direkt installierten npm-Pakete
 - `before\` und `after\`: `package.json`, Lockfile, `.npmrc`, `.env`, Dienst-, Instanz- und Statusausgaben
 
@@ -83,5 +100,5 @@ ob der ioBroker-Dienst automatisch startet.
 
 Das Skript beendet sich vor Änderungen, wenn es nicht als Administrator läuft oder das Ziel nicht wie
 eine ioBroker-Installation aussieht. Scheitert der Fix nach dem Stoppen des Dienstes, kann der Dienst
-gestoppt bleiben. Für die Analyse werden dann insbesondere `windows-fix.log` sowie die Verzeichnisse
-`before\` und `after\` benötigt.
+gestoppt bleiben. Für die Analyse werden dann insbesondere das Laufprotokoll aus dem `log`-Verzeichnis
+der Testinstallation sowie die Verzeichnisse `before\` und `after\` unter `%TEMP%` benötigt.

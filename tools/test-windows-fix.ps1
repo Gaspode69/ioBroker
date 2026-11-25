@@ -42,7 +42,10 @@ $workRoot = Join-Path ([IO.Path]::GetTempPath()) "iobroker-windows-fix-$stamp"
 $beforeRoot = Join-Path $workRoot 'before'
 $afterRoot = Join-Path $workRoot 'after'
 $npmCache = Join-Path $workRoot 'npm-cache'
+$instanceLogRoot = Join-Path $targetRoot 'log'
+$fixLog = Join-Path $instanceLogRoot "windows-fix-test-$stamp.log"
 New-Item -ItemType Directory -Path $beforeRoot, $afterRoot -Force | Out-Null
+New-Item -ItemType Directory -Path $instanceLogRoot -Force | Out-Null
 
 function Save-InstallationState {
     param(
@@ -73,6 +76,7 @@ function Save-InstallationState {
 
 Write-Host "Test installation: $targetRoot"
 Write-Host "Test results:      $workRoot"
+Write-Host "Fixer log:         $fixLog"
 Write-Host ''
 Write-Host 'This run stops ioBroker, maintains its JSONL databases, changes npm files,' -ForegroundColor Yellow
 Write-Host 'and recreates and starts the Windows service.' -ForegroundColor Yellow
@@ -128,7 +132,6 @@ Write-Host ''
 Write-Host '[3/5] Recording the state before the repair...'
 Save-InstallationState -Destination $beforeRoot
 
-$fixLog = Join-Path $workRoot 'windows-fix.log'
 $fixExitCode = 1
 try {
     Write-Host ''
