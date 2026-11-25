@@ -131,13 +131,18 @@ function setupWindows(callback) {
         return;
     }
 
-    cmd = `winget install --id Git.Git -e --source winget --silent --force --disable-interactivity --accept-source-agreements --accept-package-agreements`;
-    console.log(cmd);
-
     try {
-        execSync(cmd, { stdio: 'inherit' });
-    } catch (error) {
-        console.warn(`Error when installing GIT: ${error}`);
+        execSync('git --version', { stdio: 'ignore' });
+        console.log('Git is already installed.');
+    } catch {
+        cmd = `winget install --id Git.Git -e --source winget --silent --disable-interactivity --accept-source-agreements --accept-package-agreements`;
+        console.log(cmd);
+
+        try {
+            execSync(cmd, { stdio: 'inherit' });
+        } catch (error) {
+            console.warn(`Error when installing GIT: ${error}`);
+        }
     }
 
     console.log('Register ioBroker as Service');

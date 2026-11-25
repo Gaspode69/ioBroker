@@ -2,6 +2,8 @@
 ## **WORK IN PROGRESS**
 * Rebuilt the Windows `iob fix` flow in explicit repair steps aligned with the Linux fixer where applicable
 * Added npm configuration repair, cleanup of abandoned npm temporary directories, installation validation and Windows fixer tests
+* Fixed the local integration runner aborting on harmless native stderr output and enabled UTF-8 console output
+* Skip the Git installation when Git is already available instead of reinstalling it with `winget --force`
 
 ## 7.1.0 (2026-10-27)
 * Windows: Added `iob docker`, which shows whether Docker is installed and its engine is running

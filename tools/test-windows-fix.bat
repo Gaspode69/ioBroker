@@ -1,5 +1,6 @@
 @echo off
 setlocal
+chcp.com 65001 >nul
 
 if not "%~1"=="" (
     echo ERROR: This script does not accept parameters.

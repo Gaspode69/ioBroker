@@ -8,6 +8,10 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$utf8ConsoleEncoding = New-Object System.Text.UTF8Encoding($false)
+[Console]::InputEncoding = $utf8ConsoleEncoding
+[Console]::OutputEncoding = $utf8ConsoleEncoding
+$OutputEncoding = $utf8ConsoleEncoding
 
 if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
     throw 'This test script can only be run on Windows.'
@@ -138,8 +142,12 @@ try {
     Write-Host '[4/5] Running the local Windows fixer...'
     Push-Location $targetRoot
     try {
-        & node.exe (Join-Path $stagedPackage 'lib-npx\install.js') 2>&1 |
-            Tee-Object -FilePath $fixLog
+        # Merge stderr in cmd.exe before PowerShell sees it. Windows PowerShell otherwise turns every
+        # harmless native stderr line into an ErrorRecord, which can abort the test under ErrorActionPreference=Stop.
+        $nodeExecutable = (Get-Command node.exe).Source
+        $fixEntrypoint = Join-Path $stagedPackage 'lib-npx\install.js'
+        $fixCommandLine = '"{0}" "{1}" 2>&1' -f $nodeExecutable, $fixEntrypoint
+        & $env:ComSpec /d /s /c $fixCommandLine | Tee-Object -FilePath $fixLog
         $fixExitCode = $LASTEXITCODE
     } finally {
         Pop-Location

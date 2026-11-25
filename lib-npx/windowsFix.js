@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync, execSync } = require('node:child_process');
 
-const FIXER_VERSION = '2026-11-24';
+const FIXER_VERSION = '2026-11-25';
 const TEMP_DIRECTORY_PATTERN = /^\..+-.{8}$/;
 
 /** @param {string} rootDir */
