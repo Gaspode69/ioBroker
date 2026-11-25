@@ -10,14 +10,31 @@ ioBroker-Testinstallation ausgeführt werden, ohne `@iobroker/fix` zu veröffent
 
 ## Voraussetzungen
 
-- Windows mit Node.js und npm
+- Windows mit Git, Node.js und npm
 - eine vorhandene ioBroker-Testinstallation
 - Internetzugriff für npm, `jsonltool` und gegebenenfalls `winget`
 - eine als Administrator gestartete Eingabeaufforderung
 
+## Repository vorbereiten
+
+Das Repository einmalig lokal klonen und dabei direkt den Fixer-Branch auswählen:
+
+```bat
+git clone --branch feat/windows-fixer https://github.com/Gaspode69/ioBroker.git
+cd ioBroker
+```
+
+Ist das Repository bereits lokal vorhanden, stattdessen den Branch aktualisieren:
+
+```bat
+git fetch origin
+git switch feat/windows-fixer
+git pull --ff-only
+```
+
 ## Test starten
 
-Im ausgecheckten Repository:
+Anschließend im Verzeichnis des lokal geklonten Repositorys ausführen:
 
 ```bat
 tools\test-windows-fix.bat "C:\Pfad\zur\ioBroker-Testinstallation"
